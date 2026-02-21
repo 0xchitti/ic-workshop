@@ -18,11 +18,11 @@ const WORKSHOP = {
   hero: {
     enabled: true,
     tag: "3-Hour Live Workshop",
-    title: ["Launch your own AI agent", "that works for you."],
+    title: ["Build and deploy an AI agent", "in one live session."],
     highlightLine: 1,
-    subtitle: "Master the skills to build an AI agent that can automate your workflows over a hands-on session.",
-    primaryCta: { text: "Enroll Now", href: "#register" },
-    secondaryCta: { text: "View Curriculum ↓", href: "#curriculum" },
+    subtitle: "Go from zero to a production-ready AI agent with cron jobs, tool calling, and database connections. No fluff, no slides, just code.",
+    primaryCta: { text: "Reserve Your Spot", href: "#register" },
+    secondaryCta: { text: "See What You'll Build ↓", href: "#curriculum" },
     credibility: {
       label: "Powered by",
       logoUrl: "https://raw.githubusercontent.com/base/brand-kit/main/logo/Basemark/Digital/Base_basemark_white.svg",
@@ -31,9 +31,9 @@ const WORKSHOP = {
   },
 
   stats: { enabled: true, items: [
-    { value: "3hr", label: "Live Class" },
-    { value: "1", label: "Live Project" },
-    { value: "100%", label: "Hands-On" },
+    { value: "3hr", label: "Live Building" },
+    { value: "5+", label: "Agent Skills" },
+    { value: "1", label: "Deployed Agent" },
   ]},
 
   preview: { enabled: false, title: "", lines: [] },
@@ -41,43 +41,43 @@ const WORKSHOP = {
   audience: {
     enabled: true, tag: "Who is this for",
     title: "Whether you're starting out<br>or scaling up.",
-    subtitle: "This workshop meets you where you are — from your first agent to orchestrating a fleet.",
+    subtitle: "This workshop meets you where you are — from your first agent to production-grade orchestration.",
     cards: [
-      { icon: "⚡", label: "Beginners", title: "Curious builders & founders", desc: "You've used ChatGPT, maybe built a wrapper. Now you want to understand the real architecture behind agents that actually do things — not just chat." },
-      { icon: "⚙️", label: "Developers", title: "Engineers ready to ship", desc: "You know the theory. You want to see LangChain vs Vercel AI SDK vs OpenClaw in action, and deploy agents with cron jobs, skills, and MCP — live." },
-      { icon: "🧠", label: "Tech Leads", title: "Decision makers & architects", desc: "You need to evaluate the agent landscape for your team. Understand trade-offs, pick the right stack, and see what production-grade agents actually look like." }
+      { icon: "⚡", label: "Beginners", title: "Builders who want to go beyond wrappers", desc: "You've used ChatGPT, maybe built a wrapper around an API. This workshop shows you the real architecture — agents that schedule tasks, call tools, and run autonomously." },
+      { icon: "⚙️", label: "Developers", title: "Engineers who learn by shipping", desc: "Skip the tutorials. Compare LangChain, Vercel AI SDK, OpenClaw, and CrewAI side-by-side, then deploy a production agent with cron jobs, MCP, and multi-channel output — live." },
+      { icon: "🧠", label: "Tech Leads", title: "Decision makers picking the stack", desc: "Walk out with a clear framework for evaluating agent architectures. See trade-offs in real code, not slide decks. Know exactly which tool fits which use case." }
     ]
   },
 
   curriculum: {
     enabled: true, tag: "Curriculum",
     title: "Three hours. Three phases.<br>Zero fluff.",
-    subtitle: "A structured path from understanding the landscape to deploying live agents with real capabilities.",
+    subtitle: "Every minute is structured. You go from landscape overview to deployed agent by the end.",
     phases: [
-      { time: "", title: "Evolution & Landscape", desc: "From rule-based bots to the agentic revolution. Understand the shift from \"Chat\" to \"Do\" — and why the frameworks you choose matter more than the model you use.", topics: ["ReAct Prompting","AutoGPT → Structured Agents","LangChain Deep Dive","Vercel AI SDK","OpenClaw / Qoder","CrewAI / AutoGen","Framework Comparison"] },
-      { time: "", title: "Use Cases & Architecture", desc: "Dissect the anatomy of an agent — brain, memory, tools, planning — and explore real-world use cases that go far beyond chatbots.", topics: ["Customer Ops Agents","Dev Productivity","Data Synthesis Pipelines","LLM as the Brain","Short vs Long-Term Memory","Vector DBs","Tool Calling","Agent Planning"] },
-      { time: "", title: "Live Deployment Workshop", desc: "90 minutes of pure building. Deploy agents with scheduled automation, expandable skills, and Model Context Protocol connections — all running live.", topics: ["Cron Job Agents","Google Calendar Skill","Stripe Integration","File Manipulation","MCP Filesystem","MCP + Postgres","Slack/Discord MCP","Agent Orchestration"] }
+      { time: "45 min", title: "The Agent Landscape", desc: "Why frameworks matter more than models. Understand the shift from chatbot wrappers to autonomous agents — and see exactly where LangChain, Vercel AI SDK, OpenClaw, and CrewAI fit.", topics: ["ReAct Prompting","AutoGPT → Structured Agents","LangChain Deep Dive","Vercel AI SDK","OpenClaw / Qoder","CrewAI / AutoGen","Framework Comparison"] },
+      { time: "45 min", title: "Agent Architecture & Use Cases", desc: "Break down the anatomy of a production agent: LLM brain, memory systems, tool calling, and planning loops. Then see real deployments in customer ops, dev productivity, and data pipelines.", topics: ["Customer Ops Agents","Dev Productivity","Data Synthesis Pipelines","LLM as the Brain","Short vs Long-Term Memory","Vector DBs","Tool Calling","Agent Planning"] },
+      { time: "90 min", title: "Live Build & Deploy", desc: "Hands on keyboard. Build a fully autonomous agent with scheduled cron jobs, expandable skills, and MCP connections to databases, calendars, and messaging platforms. You deploy it live.", topics: ["Cron Job Agents","Google Calendar Skill","Stripe Integration","File Manipulation","MCP Filesystem","MCP + Postgres","Slack/Discord MCP","Agent Orchestration"] }
     ]
   },
 
   build: {
     enabled: true, tag: "Live deployment",
-    title: "What you'll build — live.",
-    subtitle: "Not a demo. You'll deploy a real, working agent by the end of this session.",
+    title: "What you'll deploy — live.",
+    subtitle: "Not a demo. Not a walkthrough. You write the code, you deploy the agent, you own it.",
     category: "AI Agent", projectTitle: "Autonomous Market Intelligence Agent",
-    desc: "Build and deploy a fully autonomous AI agent that scrapes financial data on a cron schedule, analyzes trends using LLM reasoning, connects to your database via MCP, books follow-up meetings through Google Calendar, and delivers formatted reports to Slack — all running without human intervention.",
-    highlights: ["Cron-scheduled automation","MCP data connectivity","Tool-calling skills","Multi-channel output"],
+    desc: "By minute 180, you'll have a fully autonomous agent running in production: scraping financial data on a cron schedule, analyzing trends with LLM reasoning, querying your database via MCP, booking follow-up meetings through Google Calendar, and pushing formatted reports to Slack. Zero human intervention required.",
+    highlights: ["Cron-scheduled automation","MCP database + calendar","Tool-calling skills","Slack/Discord delivery"],
   },
 
   stack: {
     enabled: true, tag: "The stack",
-    title: "Frameworks you'll work with.",
-    subtitle: "Understand the trade-offs. Pick the right tool for the job. We cover all of them.",
+    title: "Frameworks you'll actually compare.",
+    subtitle: "No vendor pitch. You'll see each framework's strengths and limits in real code, then pick the right one for your use case.",
     items: [
-      { name: "LangChain", role: "The Swiss Army Knife", desc: "Complex multi-step logic, RAG pipelines, and massive integration ecosystem." },
-      { name: "Vercel AI SDK", role: "The UX King", desc: "Streaming-first, React-native integration, and frontend-focused agentic UI." },
-      { name: "OpenClaw / Qoder", role: "The Open Source Play", desc: "Privacy-first, local execution. Emerging frameworks for autonomous coding workflows." },
-      { name: "CrewAI / AutoGen", role: "The Orchestrators", desc: "Multi-agent orchestration. When one agent isn't enough, coordinate entire agent teams." },
+      { name: "LangChain", role: "The Swiss Army Knife", desc: "Best for: complex multi-step chains, RAG pipelines, and teams that need the largest integration ecosystem." },
+      { name: "Vercel AI SDK", role: "The Frontend-First Framework", desc: "Best for: streaming UIs, React-native agent interfaces, and teams shipping user-facing AI products fast." },
+      { name: "OpenClaw / Qoder", role: "The Open Source Play", desc: "Best for: privacy-first deployments, local execution, and autonomous coding workflows without vendor lock-in." },
+      { name: "CrewAI / AutoGen", role: "The Multi-Agent Orchestrators", desc: "Best for: coordinating agent teams, complex workflows where one agent delegates to others." },
     ]
   },
 
@@ -96,18 +96,18 @@ const WORKSHOP = {
   cta: {
     enabled: true, urgency: "Limited Seats Available",
     title: "Stop watching tutorials.<br>Start deploying agents.",
-    subtitle: "3 hours of live, hands-on building. Walk in with questions, walk out with a deployed agent and a production-ready understanding of the modern AI stack.",
-    features: ["Live coding session","Full source code","Recording access"],
+    subtitle: "3 hours. One deployed agent. Full source code. Recording access. You'll leave with working infrastructure, not just notes.",
+    features: ["Live coding — you build alongside","Full source code + reference architecture","Recording access for life"],
     ctaText: "Reserve Your Spot", ctaHref: "#", price: null, priceNote: null,
   },
 
   faq: {
     enabled: true, tag: "FAQ", title: "Common questions.",
     items: [
-      { q: "Do I need coding experience?", a: "Basic familiarity with JavaScript or Python helps, but the workshop is designed so you can follow along even if you're early in your coding journey. We provide all starter code." },
-      { q: "What do I need installed?", a: "We'll send a setup guide before the workshop. Essentials: Node.js, Docker (optional), and a code editor. Everything else is provided or configured live." },
-      { q: "Will I get the code afterwards?", a: "Yes. Full source code for the agent you build, plus a reference architecture document and the recording of the entire session." },
-      { q: "What's MCP and why does it matter?", a: "Model Context Protocol is Anthropic's open standard for connecting AI agents to data sources. It's becoming the USB-C of agent connectivity — and we'll build with it live." },
+      { q: "Do I need coding experience?", a: "Basic JavaScript or Python helps. But we provide all starter code, and the workshop is paced so you can follow along even if you're early in your journey." },
+      { q: "What do I need installed?", a: "Node.js and a code editor. We'll send a setup guide 48 hours before the workshop. Docker is optional — everything else is configured live." },
+      { q: "Will I get the code afterwards?", a: "Yes. Full source code, a reference architecture doc, and lifetime access to the session recording." },
+      { q: "What's MCP and why does it matter?", a: "Model Context Protocol is Anthropic's open standard for connecting agents to databases, APIs, and tools. Think of it as USB-C for AI connectivity. You'll build with it live." },
     ]
   },
 };
