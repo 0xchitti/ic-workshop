@@ -366,6 +366,145 @@ document.querySelectorAll('.fi').forEach(el=>obs.observe(el));
 // Navbar scroll effect
 const nav=document.querySelector('.navbar');
 window.addEventListener('scroll',()=>{nav.classList.toggle('scrolled',window.scrollY>20)},{passive:true});
+
+// ── Lead Capture Modal ──
+(function(){
+  // Create modal HTML
+  const overlay = document.createElement('div');
+  overlay.id = 'lead-modal-overlay';
+  overlay.innerHTML = `
+    <div id="lead-modal">
+      <button id="lead-modal-close" aria-label="Close">&times;</button>
+      <h2 class="lead-modal-title">Reserve Your Spot</h2>
+      <p class="lead-modal-sub">Enter your details and we'll send you everything you need before the workshop.</p>
+      <form id="lead-form">
+        <div class="lead-field">
+          <label for="lead-name">Name</label>
+          <input type="text" id="lead-name" name="name" placeholder="Your full name" required autocomplete="name" />
+        </div>
+        <div class="lead-field">
+          <label for="lead-email">Email</label>
+          <input type="email" id="lead-email" name="email" placeholder="you@example.com" required autocomplete="email" />
+        </div>
+        <button type="submit" id="lead-submit">Submit</button>
+        <p id="lead-msg" style="display:none"></p>
+      </form>
+    </div>
+  `;
+  document.body.appendChild(overlay);
+
+  // Styles
+  const style = document.createElement('style');
+  style.textContent = `
+    #lead-modal-overlay {
+      display:none; position:fixed; inset:0; z-index:9999;
+      background:rgba(0,0,0,0.7); backdrop-filter:blur(6px);
+      align-items:center; justify-content:center;
+    }
+    #lead-modal-overlay.open { display:flex; }
+    #lead-modal {
+      background:#18181b; border:1px solid rgba(255,255,255,0.1);
+      border-radius:16px; padding:40px 36px; max-width:420px; width:90%;
+      position:relative; animation:modalIn .25s ease;
+    }
+    @keyframes modalIn { from{opacity:0;transform:scale(.95)translateY(10px)} to{opacity:1;transform:none} }
+    #lead-modal-close {
+      position:absolute; top:14px; right:18px; background:none; border:none;
+      color:rgba(255,255,255,0.5); font-size:28px; cursor:pointer; line-height:1;
+    }
+    #lead-modal-close:hover { color:#fff; }
+    .lead-modal-title {
+      font-size:1.5rem; font-weight:800; color:#fff; margin:0 0 8px;
+    }
+    .lead-modal-sub {
+      font-size:0.9rem; color:rgba(255,255,255,0.55); margin:0 0 24px; line-height:1.5;
+    }
+    .lead-field { margin-bottom:16px; }
+    .lead-field label {
+      display:block; font-size:0.8rem; font-weight:600; color:rgba(255,255,255,0.7);
+      margin-bottom:6px; text-transform:uppercase; letter-spacing:0.05em;
+    }
+    .lead-field input {
+      width:100%; padding:12px 14px; background:rgba(255,255,255,0.06);
+      border:1px solid rgba(255,255,255,0.12); border-radius:10px;
+      color:#fff; font-size:1rem; outline:none; transition:border-color .2s;
+      box-sizing:border-box;
+    }
+    .lead-field input:focus { border-color:var(--accent,#FF4D00); }
+    .lead-field input::placeholder { color:rgba(255,255,255,0.3); }
+    #lead-submit {
+      width:100%; padding:14px; background:var(--accent,#FF4D00); color:#fff;
+      border:none; border-radius:10px; font-size:1rem; font-weight:700;
+      cursor:pointer; margin-top:8px; transition:opacity .2s;
+    }
+    #lead-submit:hover { opacity:0.9; }
+    #lead-submit:disabled { opacity:0.5; cursor:not-allowed; }
+    #lead-msg {
+      text-align:center; margin-top:14px; font-size:0.9rem; line-height:1.4;
+    }
+    #lead-msg.success { color:#22c55e; }
+    #lead-msg.error { color:#ef4444; }
+  `;
+  document.head.appendChild(style);
+
+  // Open modal on any CTA click with href="#register" or text "Reserve Your Spot"
+  document.addEventListener('click', function(e) {
+    const a = e.target.closest('a[href="#register"], a[href="#"]');
+    if (a && (a.getAttribute('href') === '#register' || a.textContent.trim() === 'Reserve Your Spot')) {
+      e.preventDefault();
+      overlay.classList.add('open');
+    }
+  });
+
+  // Close modal
+  overlay.addEventListener('click', function(e) {
+    if (e.target === overlay) overlay.classList.remove('open');
+  });
+  document.getElementById('lead-modal-close').addEventListener('click', function() {
+    overlay.classList.remove('open');
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') overlay.classList.remove('open');
+  });
+
+  // Submit form
+  document.getElementById('lead-form').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const btn = document.getElementById('lead-submit');
+    const msg = document.getElementById('lead-msg');
+    const name = document.getElementById('lead-name').value.trim();
+    const email = document.getElementById('lead-email').value.trim();
+
+    btn.disabled = true;
+    btn.textContent = 'Submitting...';
+    msg.style.display = 'none';
+
+    try {
+      const res = await fetch('/api/lead', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email }),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        msg.textContent = '🎉 You\\'re in! We\\'ll send details to your inbox soon.';
+        msg.className = 'success';
+        msg.style.display = 'block';
+        document.getElementById('lead-form').reset();
+        setTimeout(() => overlay.classList.remove('open'), 2500);
+      } else {
+        throw new Error(data.error || 'Something went wrong');
+      }
+    } catch (err) {
+      msg.textContent = err.message || 'Something went wrong. Try again.';
+      msg.className = 'error';
+      msg.style.display = 'block';
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Submit';
+    }
+  });
+})();
 </script>
 </body>
 </html>
