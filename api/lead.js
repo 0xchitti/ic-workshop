@@ -34,7 +34,7 @@ export default async function handler(req, res) {
 
   // Optional field validation
   if (linkedin && !/^https?:\/\//.test(linkedin)) return res.status(400).json({ error: 'LinkedIn must be a valid URL' });
-  if (twitter && !/^@?[a-zA-Z0-9_]{1,15}$/.test(twitter)) return res.status(400).json({ error: 'Invalid Twitter handle' });
+  if (twitter && !/^https?:\/\//.test(twitter)) return res.status(400).json({ error: 'Twitter must be a valid URL' });
   if (github && !/^https?:\/\//.test(github)) return res.status(400).json({ error: 'GitHub must be a valid URL' });
 
   try {

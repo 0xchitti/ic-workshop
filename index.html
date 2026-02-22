@@ -426,8 +426,8 @@ window.addEventListener('scroll',()=>{nav.classList.toggle('scrolled',window.scr
           <input type="url" id="lead-linkedin" name="linkedin" placeholder="https://linkedin.com/in/yourprofile" autocomplete="url" />
         </div>
         <div class="lead-field">
-          <label for="lead-twitter">Twitter / X Handle</label>
-          <input type="text" id="lead-twitter" name="twitter" placeholder="@handle" />
+          <label for="lead-twitter">Twitter / X</label>
+          <input type="url" id="lead-twitter" name="twitter" placeholder="https://x.com/yourhandle" />
         </div>
         <div class="lead-field">
           <label for="lead-github">GitHub URL</label>
@@ -560,7 +560,8 @@ window.addEventListener('scroll',()=>{nav.classList.toggle('scrolled',window.scr
     if (!fields.discovery) errors.push('Discovery source is required');
     if (fields.linkedin && !isValidUrl(fields.linkedin)) errors.push('LinkedIn must be a valid URL');
     if (fields.linkedin && fields.linkedin && !fields.linkedin.includes('linkedin.com')) errors.push('Please enter a LinkedIn URL');
-    if (fields.twitter && !isValidTwitter(fields.twitter)) errors.push('Twitter handle format: @username (max 15 chars)');
+    if (fields.twitter && !isValidUrl(fields.twitter)) errors.push('Twitter must be a valid URL');
+    if (fields.twitter && fields.twitter && !(/x\.com|twitter\.com/.test(fields.twitter))) errors.push('Please enter a Twitter / X URL');
     if (fields.github && !isValidUrl(fields.github)) errors.push('GitHub must be a valid URL');
     if (fields.github && fields.github && !fields.github.includes('github.com')) errors.push('Please enter a GitHub URL');
 
