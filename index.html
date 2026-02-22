@@ -376,15 +376,62 @@ window.addEventListener('scroll',()=>{nav.classList.toggle('scrolled',window.scr
     <div id="lead-modal">
       <button id="lead-modal-close" aria-label="Close">&times;</button>
       <h2 class="lead-modal-title">Reserve Your Spot</h2>
-      <p class="lead-modal-sub">Enter your details and we'll send you everything you need before the workshop.</p>
+      <p class="lead-modal-sub">Tell us a bit about yourself so we can tailor the workshop experience.</p>
       <form id="lead-form">
         <div class="lead-field">
-          <label for="lead-name">Name</label>
+          <label for="lead-name">Name <span class="req">*</span></label>
           <input type="text" id="lead-name" name="name" placeholder="Your full name" required autocomplete="name" />
         </div>
         <div class="lead-field">
-          <label for="lead-email">Email</label>
+          <label for="lead-email">Email <span class="req">*</span></label>
           <input type="email" id="lead-email" name="email" placeholder="you@example.com" required autocomplete="email" />
+        </div>
+        <div class="lead-field">
+          <label for="lead-ai-level">AI Knowledge Level <span class="req">*</span></label>
+          <select id="lead-ai-level" name="aiLevel" required>
+            <option value="" disabled selected>Select your level</option>
+            <option value="Beginner">Beginner - Used ChatGPT, curious about building</option>
+            <option value="Intermediate">Intermediate - Built basic AI apps/wrappers</option>
+            <option value="Advanced">Advanced - Shipped AI products, know the stack</option>
+          </select>
+        </div>
+        <div class="lead-field">
+          <label for="lead-background">Background <span class="req">*</span></label>
+          <select id="lead-background" name="background" required>
+            <option value="" disabled selected>Select your background</option>
+            <option value="Tech / Engineering">Tech / Engineering</option>
+            <option value="Design">Design</option>
+            <option value="Marketing">Marketing</option>
+            <option value="Product">Product</option>
+            <option value="Founder / Business">Founder / Business</option>
+            <option value="Student">Student</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <div class="lead-field">
+          <label for="lead-discovery">How did you discover this workshop? <span class="req">*</span></label>
+          <select id="lead-discovery" name="discovery" required>
+            <option value="" disabled selected>Select one</option>
+            <option value="Twitter / X">Twitter / X</option>
+            <option value="LinkedIn">LinkedIn</option>
+            <option value="Instagram">Instagram</option>
+            <option value="Friend / Referral">Friend / Referral</option>
+            <option value="Ads">Ads</option>
+            <option value="Inner Circle Community">Inner Circle Community</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <div class="lead-field">
+          <label for="lead-linkedin">LinkedIn URL</label>
+          <input type="url" id="lead-linkedin" name="linkedin" placeholder="https://linkedin.com/in/yourprofile" autocomplete="url" />
+        </div>
+        <div class="lead-field">
+          <label for="lead-twitter">Twitter / X Handle</label>
+          <input type="text" id="lead-twitter" name="twitter" placeholder="@handle" />
+        </div>
+        <div class="lead-field">
+          <label for="lead-github">GitHub URL</label>
+          <input type="url" id="lead-github" name="github" placeholder="https://github.com/username" />
         </div>
         <button type="submit" id="lead-submit">Submit</button>
         <p id="lead-msg" style="display:none"></p>
@@ -404,9 +451,12 @@ window.addEventListener('scroll',()=>{nav.classList.toggle('scrolled',window.scr
     #lead-modal-overlay.open { display:flex; }
     #lead-modal {
       background:#18181b; border:1px solid rgba(255,255,255,0.1);
-      border-radius:16px; padding:40px 36px; max-width:420px; width:90%;
+      border-radius:16px; padding:40px 36px; max-width:480px; width:90%;
+      max-height:90vh; overflow-y:auto;
       position:relative; animation:modalIn .25s ease;
     }
+    #lead-modal::-webkit-scrollbar { width:6px; }
+    #lead-modal::-webkit-scrollbar-thumb { background:rgba(255,255,255,0.15); border-radius:3px; }
     @keyframes modalIn { from{opacity:0;transform:scale(.95)translateY(10px)} to{opacity:1;transform:none} }
     #lead-modal-close {
       position:absolute; top:14px; right:18px; background:none; border:none;
@@ -424,14 +474,21 @@ window.addEventListener('scroll',()=>{nav.classList.toggle('scrolled',window.scr
       display:block; font-size:0.8rem; font-weight:600; color:rgba(255,255,255,0.7);
       margin-bottom:6px; text-transform:uppercase; letter-spacing:0.05em;
     }
-    .lead-field input {
+    .lead-field input, .lead-field select {
       width:100%; padding:12px 14px; background:rgba(255,255,255,0.06);
       border:1px solid rgba(255,255,255,0.12); border-radius:10px;
       color:#fff; font-size:1rem; outline:none; transition:border-color .2s;
-      box-sizing:border-box;
+      box-sizing:border-box; font-family:inherit;
     }
-    .lead-field input:focus { border-color:var(--accent,#FF4D00); }
+    .lead-field select { cursor:pointer; appearance:none;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='rgba(255,255,255,0.4)' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10z'/%3E%3C/svg%3E");
+      background-repeat:no-repeat; background-position:right 14px center;
+    }
+    .lead-field select option { background:#18181b; color:#fff; }
+    .lead-field input:focus, .lead-field select:focus { border-color:var(--accent,#FF4D00); }
     .lead-field input::placeholder { color:rgba(255,255,255,0.3); }
+    .lead-field .req { color:var(--accent,#FF4D00); }
+    .lead-field .field-err { color:#ef4444; font-size:0.75rem; margin-top:4px; display:none; }
     #lead-submit {
       width:100%; padding:14px; background:var(--accent,#FF4D00); color:#fff;
       border:none; border-radius:10px; font-size:1rem; font-weight:700;
@@ -467,13 +524,52 @@ window.addEventListener('scroll',()=>{nav.classList.toggle('scrolled',window.scr
     if (e.key === 'Escape') overlay.classList.remove('open');
   });
 
+  // Validation helpers
+  function isValidUrl(str) {
+    if (!str) return true; // optional fields
+    try { new URL(str); return true; } catch { return false; }
+  }
+  function isValidTwitter(str) {
+    if (!str) return true;
+    return /^@?[a-zA-Z0-9_]{1,15}$/.test(str);
+  }
+
   // Submit form
   document.getElementById('lead-form').addEventListener('submit', async function(e) {
     e.preventDefault();
     const btn = document.getElementById('lead-submit');
     const msg = document.getElementById('lead-msg');
-    const name = document.getElementById('lead-name').value.trim();
-    const email = document.getElementById('lead-email').value.trim();
+
+    const fields = {
+      name: document.getElementById('lead-name').value.trim(),
+      email: document.getElementById('lead-email').value.trim(),
+      aiLevel: document.getElementById('lead-ai-level').value,
+      background: document.getElementById('lead-background').value,
+      discovery: document.getElementById('lead-discovery').value,
+      linkedin: document.getElementById('lead-linkedin').value.trim(),
+      twitter: document.getElementById('lead-twitter').value.trim(),
+      github: document.getElementById('lead-github').value.trim(),
+    };
+
+    // Validation
+    const errors = [];
+    if (!fields.name) errors.push('Name is required');
+    if (!fields.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(fields.email)) errors.push('Valid email is required');
+    if (!fields.aiLevel) errors.push('AI knowledge level is required');
+    if (!fields.background) errors.push('Background is required');
+    if (!fields.discovery) errors.push('Discovery source is required');
+    if (fields.linkedin && !isValidUrl(fields.linkedin)) errors.push('LinkedIn must be a valid URL');
+    if (fields.linkedin && fields.linkedin && !fields.linkedin.includes('linkedin.com')) errors.push('Please enter a LinkedIn URL');
+    if (fields.twitter && !isValidTwitter(fields.twitter)) errors.push('Twitter handle format: @username (max 15 chars)');
+    if (fields.github && !isValidUrl(fields.github)) errors.push('GitHub must be a valid URL');
+    if (fields.github && fields.github && !fields.github.includes('github.com')) errors.push('Please enter a GitHub URL');
+
+    if (errors.length) {
+      msg.textContent = errors[0];
+      msg.className = 'error';
+      msg.style.display = 'block';
+      return;
+    }
 
     btn.disabled = true;
     btn.textContent = 'Submitting...';
@@ -483,7 +579,7 @@ window.addEventListener('scroll',()=>{nav.classList.toggle('scrolled',window.scr
       const res = await fetch('/api/lead', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email }),
+        body: JSON.stringify(fields),
       });
       const data = await res.json();
       if (res.ok) {

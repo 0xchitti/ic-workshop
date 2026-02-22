@@ -16,7 +16,6 @@ async function refreshAccessToken() {
 }
 
 export default async function handler(req, res) {
-  // CORS
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -24,20 +23,26 @@ export default async function handler(req, res) {
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-  const { name, email } = req.body || {};
-  if (!name || !email) return res.status(400).json({ error: 'Name and email required' });
+  const { name, email, aiLevel, background, discovery, linkedin, twitter, github } = req.body || {};
 
-  // Basic email validation
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    return res.status(400).json({ error: 'Invalid email' });
-  }
+  // Required field validation
+  if (!name || !name.trim()) return res.status(400).json({ error: 'Name is required' });
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return res.status(400).json({ error: 'Valid email is required' });
+  if (!aiLevel) return res.status(400).json({ error: 'AI knowledge level is required' });
+  if (!background) return res.status(400).json({ error: 'Background is required' });
+  if (!discovery) return res.status(400).json({ error: 'Discovery source is required' });
+
+  // Optional field validation
+  if (linkedin && !/^https?:\/\//.test(linkedin)) return res.status(400).json({ error: 'LinkedIn must be a valid URL' });
+  if (twitter && !/^@?[a-zA-Z0-9_]{1,15}$/.test(twitter)) return res.status(400).json({ error: 'Invalid Twitter handle' });
+  if (github && !/^https?:\/\//.test(github)) return res.status(400).json({ error: 'GitHub must be a valid URL' });
 
   try {
     const accessToken = await refreshAccessToken();
     const timestamp = new Date().toISOString();
 
     const sheetsRes = await fetch(
-      `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Leads!A:C:append?valueInputOption=USER_ENTERED&insertDataOption=INSERT_ROWS`,
+      `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Leads!A:I:append?valueInputOption=USER_ENTERED&insertDataOption=INSERT_ROWS`,
       {
         method: 'POST',
         headers: {
@@ -45,7 +50,17 @@ export default async function handler(req, res) {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          values: [[timestamp, name, email]],
+          values: [[
+            timestamp,
+            name.trim(),
+            email.trim(),
+            aiLevel,
+            background,
+            discovery,
+            linkedin || '',
+            twitter || '',
+            github || '',
+          ]],
         }),
       }
     );
