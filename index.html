@@ -194,12 +194,7 @@ section{padding:48px 0}
 .hero-tag{position:relative;z-index:1;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--accent);letter-spacing:3px;text-transform:uppercase;margin-bottom:24px;opacity:0;animation:fadeUp .8s .2s forwards;display:flex;align-items:center;gap:8px}
 .hero-tag .live-dot{width:7px;height:7px;background:var(--accent);border-radius:50%;display:inline-block;animation:pulseDot 2s infinite;flex-shrink:0}
 .hero-tag-sep{opacity:.35;margin:0 2px}
-.hero-countdown{display:inline-flex;align-items:center;gap:0;width:fit-content;align-self:flex-start;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);border-radius:12px;padding:10px 18px;margin-bottom:24px;opacity:0;animation:fadeUp .8s .5s forwards}
-.countdown-label{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent);letter-spacing:2px;text-transform:uppercase;margin-right:16px;white-space:nowrap}
-.countdown-seg{display:flex;flex-direction:column;align-items:center;min-width:36px}
-.countdown-val{font-family:'JetBrains Mono',monospace;font-size:20px;font-weight:700;color:#fff;line-height:1}
-.countdown-unit{font-family:'JetBrains Mono',monospace;font-size:8px;color:rgba(255,255,255,0.35);letter-spacing:1.5px;margin-top:3px;text-transform:uppercase}
-.countdown-sep{font-family:'JetBrains Mono',monospace;font-size:16px;color:rgba(255,255,255,0.2);padding:0 2px 4px}
+.hero-date-line{font-family:'JetBrains Mono',monospace;font-size:13px;color:rgba(255,255,255,0.5);letter-spacing:1px;margin-bottom:24px;opacity:0;animation:fadeUp .8s .5s forwards}
 .hero-title{position:relative;z-index:1;font-size:clamp(40px,5vw,68px);font-weight:800;line-height:1.05;letter-spacing:-2px;margin-bottom:28px;opacity:0;animation:fadeUp .8s .4s forwards}
 .hero-title .line{display:block}
 .hero-title .hl{color:var(--accent)}
@@ -353,7 +348,7 @@ html+=`<nav class="navbar"><a href="#" class="navbar-logo">${logoSvg}</a><a href
 
 // HERO
 if(WORKSHOP.hero.enabled){const h=WORKSHOP.hero;const tl=h.title.map((l,i)=>`<span class="line">${i===h.highlightLine?`<span class="hl">${l}</span>`:l}</span>`).join('');
-html+=`<div class="hero-bg"><div class="grid"></div><div class="noise"></div><div class="glow glow-1"></div><div class="glow glow-2"></div><div class="glow glow-3"></div><div class="nodes"><div class="node"></div><div class="node"></div><div class="node"></div><div class="node"></div><div class="node"></div><div class="node"></div></div></div><div class="container"><section class="hero"><div class="hero-tag"><span class="live-dot"></span> LIVE <span class="hero-tag-sep">·</span> ${h.tag}</div><h1 class="hero-title">${tl}</h1>${h.date?`<div class="hero-countdown" id="hero-countdown"><span class="countdown-label">STARTS IN</span><div class="countdown-seg"><span class="countdown-val" id="cd-d">--</span><span class="countdown-unit">DAYS</span></div><span class="countdown-sep">:</span><div class="countdown-seg"><span class="countdown-val" id="cd-h">--</span><span class="countdown-unit">HRS</span></div><span class="countdown-sep">:</span><div class="countdown-seg"><span class="countdown-val" id="cd-m">--</span><span class="countdown-unit">MIN</span></div><span class="countdown-sep">:</span><div class="countdown-seg"><span class="countdown-val" id="cd-s">--</span><span class="countdown-unit">SEC</span></div></div>`:''}<p class="hero-sub">${h.subtitle}</p>${WORKSHOP.stats.enabled?`<div class="stats-strip">${WORKSHOP.stats.items.map((s,i)=>`<div class="stat-item"><span class="stat-val">${s.value}</span><span class="stat-lbl">${s.label}</span></div>${i<WORKSHOP.stats.items.length-1?'<span class="stat-sep">·</span>':''}`).join('')}</div>`:''}${h.credibility?`<div class="cred-badge"><span class="cred-label">${h.credibility.label}</span><span class="cred-divider"></span>${h.credibility.logoUrl?`<img class="cred-logo" src="${h.credibility.logoUrl}" alt="${h.credibility.logoAlt||h.credibility.name}">`:`<span class="cred-name">${h.credibility.name}</span>`}</div>`:''}<div class="hero-actions"><a href="${h.primaryCta.href}" class="btn-p">${h.primaryCta.text} ${arrowSvg}</a>${h.secondaryCta?`<a href="${h.secondaryCta.href}" class="btn-s">${h.secondaryCta.text}</a>`:''}</div></section></div>`}
+html+=`<div class="hero-bg"><div class="grid"></div><div class="noise"></div><div class="glow glow-1"></div><div class="glow glow-2"></div><div class="glow glow-3"></div><div class="nodes"><div class="node"></div><div class="node"></div><div class="node"></div><div class="node"></div><div class="node"></div><div class="node"></div></div></div><div class="container"><section class="hero"><div class="hero-tag"><span class="live-dot"></span> LIVE <span class="hero-tag-sep">·</span> ${h.tag}</div><h1 class="hero-title">${tl}</h1>${h.date?`<div class="hero-date-line">${h.date}</div>`:''}<p class="hero-sub">${h.subtitle}</p>${WORKSHOP.stats.enabled?`<div class="stats-strip">${WORKSHOP.stats.items.map((s,i)=>`<div class="stat-item"><span class="stat-val">${s.value}</span><span class="stat-lbl">${s.label}</span></div>${i<WORKSHOP.stats.items.length-1?'<span class="stat-sep">·</span>':''}`).join('')}</div>`:''}${h.credibility?`<div class="cred-badge"><span class="cred-label">${h.credibility.label}</span><span class="cred-divider"></span>${h.credibility.logoUrl?`<img class="cred-logo" src="${h.credibility.logoUrl}" alt="${h.credibility.logoAlt||h.credibility.name}">`:`<span class="cred-name">${h.credibility.name}</span>`}</div>`:''}<div class="hero-actions"><a href="${h.primaryCta.href}" class="btn-p">${h.primaryCta.text} ${arrowSvg}</a>${h.secondaryCta?`<a href="${h.secondaryCta.href}" class="btn-s">${h.secondaryCta.text}</a>`:''}</div></section></div>`}
 
 // AUDIENCE
 if(WORKSHOP.audience.enabled){const a=WORKSHOP.audience;html+=`<div class="container"><section class="fi"><div class="s-tag">${a.tag}</div><h2 class="s-title">${a.title}</h2><p class="s-desc">${a.subtitle}</p><div class="aud-grid">${a.cards.map(c=>`<div class="aud-card"><span class="aud-icon">${c.icon}</span><div class="aud-lbl">${c.label}</div><div class="aud-title">${c.title}</div><div class="aud-desc">${c.desc}</div></div>`).join('')}</div></section></div>`}
@@ -379,22 +374,6 @@ if(WORKSHOP.faq.enabled){const f=WORKSHOP.faq;html+=`<div class="container"><sec
 // FOOTER
 html+=`<footer><div class="container"><p>${WORKSHOP.brand} — ${WORKSHOP.hero.title.join(' ')}</p></div></footer>`;
 document.getElementById('app').innerHTML=html;
-// ── Countdown Timer ──
-(function(){
-  const cdEl=document.getElementById('hero-countdown');
-  if(!cdEl)return;
-  const target=new Date('2026-03-07T13:30:00Z').getTime();
-  function pad(n){return String(n).padStart(2,'0')}
-  function tick(){
-    const diff=target-Date.now();
-    if(diff<=0){cdEl.innerHTML='<span class="countdown-label" style="color:var(--accent)">LIVE NOW 🔴</span>';return;}
-    document.getElementById('cd-d').textContent=pad(Math.floor(diff/86400000));
-    document.getElementById('cd-h').textContent=pad(Math.floor(diff%86400000/3600000));
-    document.getElementById('cd-m').textContent=pad(Math.floor(diff%3600000/60000));
-    document.getElementById('cd-s').textContent=pad(Math.floor(diff%60000/1000));
-  }
-  tick();setInterval(tick,1000);
-})();
 const obs=new IntersectionObserver(e=>{e.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis')})},{threshold:.1,rootMargin:'0px 0px -40px 0px'});
 document.querySelectorAll('.fi').forEach(el=>obs.observe(el));
 // Navbar scroll effect
